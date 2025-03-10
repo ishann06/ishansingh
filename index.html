@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Appointment Booking</title>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init({
+            publicKey: "MaX61E_k6PrY2dvaH", // Replace with your EmailJS public key
+          });
+       })();
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #175d62, #a2d3da);
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .banner {
+            background-color: #024e3f;
+            color: rgb(248, 233, 233);
+            padding: 50px;
+            font-size: 56px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            border-radius: 0;
+        }
+        .container {
+            width: 40%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background-color: rgb(73, 131, 73);
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">SIDHARTH'S CLINIC</div>
+    <div class="container">
+        <h2>BOOK YOUR APPOINTMENT</h2>
+        <form id="appointmentForm">
+            <input type="text" id="name" placeholder="Enter your name" required><br>
+            <input type="tel" id="phone" placeholder="Enter your phone number" required><br>
+            <input type="number" id="age" placeholder="Enter your age" required><br>
+            <input type="email" id="email" placeholder="Enter your email address" required><br>
+            <button type="submit">Book Appointment</button>
+        </form>
+        <div id="confirmation" style="display:none;">
+            <h3>Appointment Confirmed</h3>
+            <p><strong>Appointment Number:</strong> <span id="appointmentNumber"></span></p>
+            <p><strong>Time Slot:</strong> <span id="timeSlot"></span></p>
+            <p><strong>Name:</strong> <span id="confirmedName"></span></p>
+            <p><strong>Phone:</strong> <span id="confirmedPhone"></span></p>
+            <p><strong>Age:</strong> <span id="confirmedAge"></span></p>
+            <p><strong>Email:</strong> <span id="confirmedEmail"></span></p>
+        </div>
+    </div>
+
+    <script>
+        let appointmentCount = 0;
+        const timeSlots = ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM"];
+
+        document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            appointmentCount++;
+            let name = document.getElementById("name").value;
+            let phone = document.getElementById("phone").value;
+            let age = document.getElementById("age").value;
+            let email = document.getElementById("email").value;
+            let appointmentNumber = appointmentCount;
+            let timeSlot = timeSlots[(appointmentNumber - 1) % timeSlots.length];
+
+            document.getElementById("appointmentNumber").innerText = appointmentNumber;
+            document.getElementById("timeSlot").innerText = timeSlot;
+            document.getElementById("confirmedName").innerText = name;
+            document.getElementById("confirmedPhone").innerText = phone;
+            document.getElementById("confirmedAge").innerText = age;
+            document.getElementById("confirmedEmail").innerText = email;
+            document.getElementById("confirmation").style.display = "block";
+
+            // Send email using EmailJS
+            let emailParams = {
+                to_email: email,
+                name: name,
+                appointment_number: appointmentNumber,
+                time_slot: timeSlot
+            };
+
+            emailjs.send("service_q3ns39z", "template_v7osnvv", emailParams)
+                .then(response => {
+                    alert("Appointment confirmation email sent successfully!");
+                })
+                .catch(error => {
+                    console.error("Email sending failed:", error);
+                });
+        });
+    </script>
+</body>
+</html>
