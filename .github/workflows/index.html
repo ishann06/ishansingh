@@ -14,70 +14,35 @@
           });
        })();
     </script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDceoUJlbCZ0i72hKp6ghxHgc024wvbMpU",
-            authDomain: "doctor-appointment-a7bb7.firebaseapp.com",
-            databaseURL: "https://doctor-appointment-a7bb7-default-rtdb.firebaseio.com",
-            projectId: "doctor-appointment-a7bb7",
-            storageBucket: "doctor-appointment-a7bb7.firebasestorage.app",
-            messagingSenderId: "68082044375",
-            appId: "1:68082044375:web:929c06a35c18e5b2988f92",
-            measurementId: "G-YP5PETRT1G"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        window.saveAppointment = function(name, phone, age, email, appointmentNumber, timeSlot) {
-            const appointmentsRef = ref(database, 'appointments');
-            push(appointmentsRef, {
-                name,
-                phone,
-                age,
-                email,
-                appointmentNumber,
-                timeSlot
-            }).then(() => {
-                console.log("Appointment saved successfully!");
-            }).catch(error => {
-                console.error("Error saving appointment:", error);
-            });
-        };
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
-            padding: 0;
+            padding-top: 100px; /* Push content below fixed banner */
             background: linear-gradient(to right, #175d62, #a2d3da);
             background-attachment: fixed;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
         }
         .banner {
             background-color: #024e3f;
-            color: rgb(248, 233, 233);
-            padding: 50px;
+            color: #FFFFFF;
+            padding: 20px;
             font-size: 56px;
             font-weight: bold;
             text-align: center;
             width: 100%;
-            border-radius: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
         .container {
-            width: 40%;
+            width: 50%;
             padding: 20px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            margin-top: 20px;
+            margin: 20px auto;
         }
         input, button {
             padding: 10px;
@@ -95,10 +60,28 @@
         button:hover {
             background-color: darkgreen;
         }
+        .extra-content {
+            width: 50%;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+        .extra-content h2 {
+            font-size: 28px;
+            color: #024e3f;
+        }
+        .extra-content p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
     <div class="banner">SIDHARTH'S CLINIC</div>
+
     <div class="container">
         <h2>BOOK YOUR APPOINTMENT</h2>
         <form id="appointmentForm">
@@ -118,6 +101,31 @@
             <p><strong>Email:</strong> <span id="confirmedEmail"></span></p>
         </div>
     </div>
+
+    <!-- Additional Content to Make Page Longer -->
+    <div class="extra-content">
+        <h2>About Dr. Sidharth Singh</h2>
+        <p><strong>Qualifications:</strong> MBBS, MD (Internal Medicine), DM (Cardiology)</p>
+        <p>Dr. Sidharth Singh is a highly experienced doctor with over 15 years of practice in internal medicine and cardiology. He is known for his patient-friendly approach and accurate diagnosis.</p>
+    </div>
+
+    <div class="extra-content">
+        <h2>Facilities at Our Clinic</h2>
+        <ul>
+            <li>24/7 Emergency Care</li>
+            <li>State-of-the-art Diagnostic Lab</li>
+            <li>Advanced Cardiac Testing</li>
+            <li>Specialized Diabetes Care</li>
+            <li>Physiotherapy and Rehabilitation Services</li>
+        </ul>
+    </div>
+
+    <div class="extra-content">
+        <h2>Testimonials</h2>
+        <p>"Dr. Sidharth is the best doctor I have ever met. His treatment changed my life!" - <em>Rohan Sharma</em></p>
+        <p>"Excellent facilities and very friendly staff. Highly recommended!" - <em>Anita Mehta</em></p>
+    </div>
+
     <script>
         let appointmentCount = 0;
         const timeSlots = ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM"];
@@ -140,17 +148,22 @@
             document.getElementById("confirmedEmail").innerText = email;
             document.getElementById("confirmation").style.display = "block";
 
-            saveAppointment(name, phone, age, email, appointmentNumber, timeSlot);
-            
-            let emailParams = { to_email: email, name, appointment_number: appointmentNumber, time_slot: timeSlot };
+            // Send email using EmailJS
+            let emailParams = {
+                to_email: email,
+                name: name,
+                appointment_number: appointmentNumber,
+                time_slot: timeSlot
+            };
+
             emailjs.send("service_q3ns39z", "template_v7osnvv", emailParams)
-                .then(response => { alert("Appointment confirmation email sent successfully!"); })
-                .catch(error => { console.error("Email sending failed:", error); });
+                .then(response => {
+                    alert("Appointment confirmation email sent successfully!");
+                })
+                .catch(error => {
+                    console.error("Email sending failed:", error);
+                });
         });
     </script>
 </body>
 </html>
-
- 
- 
-    
