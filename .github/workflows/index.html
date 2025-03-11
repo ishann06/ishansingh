@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Appointment Booking</title>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-    </script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
        (function(){
           emailjs.init({
@@ -14,6 +13,7 @@
           });
        })();
     </script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,7 +35,7 @@
             left: 0;
             z-index: 1000;
         }
-        .container {
+        .container, .extra-content, .reviews-container, .contact-container, .facilities-container {
             width: 50%;
             padding: 20px;
             background: rgba(255, 255, 255, 0.9);
@@ -59,20 +59,11 @@
         button:hover {
             background-color: darkgreen;
         }
-        .extra-content {
-            width: 50%;
-            margin: 30px auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            text-align: left;
-        }
-        .extra-content h2 {
+        .extra-content h2, .reviews-container h2, .contact-container h2, .facilities-container h2 {
             font-size: 28px;
             color: #024e3f;
         }
-        .extra-content p, li {
+        .extra-content p, .reviews-container p, .contact-container p, .facilities-container p, .facilities-container li {
             font-size: 18px;
             line-height: 1.6;
         }
@@ -90,61 +81,46 @@
             <input type="email" id="email" placeholder="Enter your email address" required><br>
             <button type="submit">Book Appointment</button>
         </form>
+        <div id="confirmation" style="display:none;">
+            <h3>Appointment Confirmed</h3>
+            <p><strong>Appointment Number:</strong> <span id="appointmentNumber"></span></p>
+            <p><strong>Time Slot:</strong> <span id="timeSlot"></span></p>
+            <p><strong>Name:</strong> <span id="confirmedName"></span></p>
+            <p><strong>Phone:</strong> <span id="confirmedPhone"></span></p>
+            <p><strong>Age:</strong> <span id="confirmedAge"></span></p>
+            <p><strong>Email:</strong> <span id="confirmedEmail"></span></p>
+        </div>
     </div>
 
-    <!-- About the Doctor -->
     <div class="extra-content">
         <h2>About Dr. Sidharth Singh</h2>
         <p><strong>Qualifications:</strong> MBBS, MD (Internal Medicine), DM (Cardiology)</p>
-        <p>With over 15 years of experience, Dr. Sidharth Singh has helped thousands of patients with his expertise in internal medicine and cardiology. He has received numerous awards for excellence in patient care.</p>
+        <p>With over 15 years of experience, Dr. Sidharth Singh has helped thousands of patients with his expertise in internal medicine and cardiology. He specializes in treating heart conditions, hypertension, and diabetes.</p>
     </div>
 
-    <!-- Clinic Facilities -->
-    <div class="extra-content">
-        <h2>Facilities at Our Clinic</h2>
+    <div class="facilities-container">
+        <h2>🏥 Clinic Facilities</h2>
         <ul>
-            <li>24/7 Emergency Care</li>
-            <li>Advanced Diagnostic Lab</li>
-            <li>Cardiac Testing & ECG</li>
-            <li>Specialized Diabetes Treatment</li>
-            <li>Physiotherapy & Rehabilitation</li>
+            <li>✔ 24/7 Emergency Services</li>
+            <li>✔ Advanced Diagnostic Laboratory</li>
+            <li>✔ Physiotherapy & Rehabilitation Center</li>
+            <li>✔ Pharmacy & Medicine Availability</li>
+            <li>✔ Comfortable Waiting Lounge</li>
         </ul>
     </div>
 
-    <!-- Testimonials -->
-    <div class="extra-content">
-        <h2>What Our Patients Say</h2>
-        <p><strong>Rohit Kumar:</strong> "Dr. Sidharth is the best! He diagnosed my condition quickly and treated me with great care."</p>
-        <p><strong>Anjali Sharma:</strong> "I was suffering from heart issues, but after visiting the clinic, my condition has improved significantly. Highly recommend!"</p>
+    <div class="reviews-container">
+        <h2>💬 Patient Reviews</h2>
+        <p><strong>Ramesh Sharma:</strong> "Dr. Sidharth is a fantastic doctor. His treatments are highly effective!"</p>
+        <p><strong>Anjali Verma:</strong> "Best clinic in town! The staff is very caring and professional."</p>
+        <p><strong>Vikram Gupta:</strong> "I had a great experience at this clinic. The appointment booking was smooth and hassle-free."</p>
     </div>
 
-    <!-- Health Tips -->
-    <div class="extra-content">
-        <h2>Health Tips from Dr. Sidharth</h2>
-        <ul>
-            <li>Drink plenty of water and stay hydrated.</li>
-            <li>Exercise for at least 30 minutes daily.</li>
-            <li>Eat a balanced diet rich in proteins and vitamins.</li>
-            <li>Regular health check-ups can help prevent diseases.</li>
-            <li>Get enough sleep for better overall health.</li>
-        </ul>
-    </div>
-
-    <!-- Contact Section -->
-    <div class="extra-content">
-        <h2>Contact Us</h2>
-        <p><strong>Address:</strong> 123, Health Street, New Delhi, India</p>
-        <p><strong>Phone:</strong> +91 9876543210</p>
-        <p><strong>Email:</strong> contact@sidharhsclinic.com</p>
-        <iframe 
-            width="100%" 
-            height="300" 
-            frameborder="0" 
-            style="border:0" 
-            referrerpolicy="no-referrer-when-downgrade"
-            allowfullscreen 
-            src="https://www.google.com/maps/embed/v1/place?q=New+Delhi,India&key=YOUR_GOOGLE_MAPS_API_KEY">
-        </iframe>
+    <div class="contact-container">
+        <h2>📍 Contact Us</h2>
+        <p>📍 Address: 123 Health Street, New Delhi, India</p>
+        <p>📞 Phone: +91 98765 43210</p>
+        <p>📧 Email: contact@sidharthclinic.com</p>
     </div>
 
     <script type="module">
@@ -163,17 +139,41 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
+        let appointmentCount = 0;
+        const timeSlots = ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM"];
 
         document.getElementById("appointmentForm").addEventListener("submit", function(event) {
             event.preventDefault();
+            appointmentCount++;
             let name = document.getElementById("name").value;
             let phone = document.getElementById("phone").value;
             let age = document.getElementById("age").value;
             let email = document.getElementById("email").value;
+            let appointmentNumber = appointmentCount;
+            let timeSlot = timeSlots[(appointmentNumber - 1) % timeSlots.length];
 
-            push(ref(database, 'appointments'), { name, phone, age, email })
+            document.getElementById("appointmentNumber").innerText = appointmentNumber;
+            document.getElementById("timeSlot").innerText = timeSlot;
+            document.getElementById("confirmedName").innerText = name;
+            document.getElementById("confirmedPhone").innerText = phone;
+            document.getElementById("confirmedAge").innerText = age;
+            document.getElementById("confirmedEmail").innerText = email;
+            document.getElementById("confirmation").style.display = "block";
+
+            push(ref(database, 'appointments'), { name, phone, age, email, appointmentNumber, timeSlot })
                 .then(() => alert("Appointment Booked Successfully!"))
                 .catch(error => console.error("Error:", error));
+
+            emailjs.send("service_q3ns39z", "template_v7osnvv", {
+                to_email: email,
+                name: name,
+                appointment_number: appointmentNumber,
+                time_slot: timeSlot
+            }).then(response => {
+                alert("Confirmation email sent successfully!");
+            }).catch(error => {
+                console.error("Email sending failed:", error);
+            });
         });
     </script>
 </body>
