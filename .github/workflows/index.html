@@ -14,7 +14,7 @@
           });
        })();
     </script>
-     <script type="module">
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
         import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
@@ -118,7 +118,6 @@
             <p><strong>Email:</strong> <span id="confirmedEmail"></span></p>
         </div>
     </div>
-
     <script>
         let appointmentCount = 0;
         const timeSlots = ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM"];
@@ -141,22 +140,17 @@
             document.getElementById("confirmedEmail").innerText = email;
             document.getElementById("confirmation").style.display = "block";
 
-            // Send email using EmailJS
-            let emailParams = {
-                to_email: email,
-                name: name,
-                appointment_number: appointmentNumber,
-                time_slot: timeSlot
-            };
-
+            saveAppointment(name, phone, age, email, appointmentNumber, timeSlot);
+            
+            let emailParams = { to_email: email, name, appointment_number: appointmentNumber, time_slot: timeSlot };
             emailjs.send("service_q3ns39z", "template_v7osnvv", emailParams)
-                .then(response => {
-                    alert("Appointment confirmation email sent successfully!");
-                })
-                .catch(error => {
-                    console.error("Email sending failed:", error);
-                });
+                .then(response => { alert("Appointment confirmation email sent successfully!"); })
+                .catch(error => { console.error("Email sending failed:", error); });
         });
     </script>
 </body>
 </html>
+
+ 
+ 
+    
