@@ -19,9 +19,8 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
-            padding-top: 100px; /* Push content below fixed banner */
+            padding-top: 100px;
             background: linear-gradient(to right, #175d62, #a2d3da);
-            background-attachment: fixed;
         }
         .banner {
             background-color: #024e3f;
@@ -42,7 +41,7 @@
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            margin: 20px auto;
+            margin: 30px auto;
         }
         input, button {
             padding: 10px;
@@ -73,7 +72,7 @@
             font-size: 28px;
             color: #024e3f;
         }
-        .extra-content p {
+        .extra-content p, li {
             font-size: 18px;
             line-height: 1.6;
         }
@@ -91,78 +90,90 @@
             <input type="email" id="email" placeholder="Enter your email address" required><br>
             <button type="submit">Book Appointment</button>
         </form>
-        <div id="confirmation" style="display:none;">
-            <h3>Appointment Confirmed</h3>
-            <p><strong>Appointment Number:</strong> <span id="appointmentNumber"></span></p>
-            <p><strong>Time Slot:</strong> <span id="timeSlot"></span></p>
-            <p><strong>Name:</strong> <span id="confirmedName"></span></p>
-            <p><strong>Phone:</strong> <span id="confirmedPhone"></span></p>
-            <p><strong>Age:</strong> <span id="confirmedAge"></span></p>
-            <p><strong>Email:</strong> <span id="confirmedEmail"></span></p>
-        </div>
     </div>
 
-    <!-- Additional Content to Make Page Longer -->
+    <!-- About the Doctor -->
     <div class="extra-content">
         <h2>About Dr. Sidharth Singh</h2>
         <p><strong>Qualifications:</strong> MBBS, MD (Internal Medicine), DM (Cardiology)</p>
-        <p>Dr. Sidharth Singh is a highly experienced doctor with over 15 years of practice in internal medicine and cardiology. He is known for his patient-friendly approach and accurate diagnosis.</p>
+        <p>With over 15 years of experience, Dr. Sidharth Singh has helped thousands of patients with his expertise in internal medicine and cardiology. He has received numerous awards for excellence in patient care.</p>
     </div>
 
+    <!-- Clinic Facilities -->
     <div class="extra-content">
         <h2>Facilities at Our Clinic</h2>
         <ul>
             <li>24/7 Emergency Care</li>
-            <li>State-of-the-art Diagnostic Lab</li>
-            <li>Advanced Cardiac Testing</li>
-            <li>Specialized Diabetes Care</li>
-            <li>Physiotherapy and Rehabilitation Services</li>
+            <li>Advanced Diagnostic Lab</li>
+            <li>Cardiac Testing & ECG</li>
+            <li>Specialized Diabetes Treatment</li>
+            <li>Physiotherapy & Rehabilitation</li>
         </ul>
     </div>
 
+    <!-- Testimonials -->
     <div class="extra-content">
-        <h2>Testimonials</h2>
-        <p>"Dr. Sidharth is the best doctor I have ever met. His treatment changed my life!" - <em>Rohan Sharma</em></p>
-        <p>"Excellent facilities and very friendly staff. Highly recommended!" - <em>Anita Mehta</em></p>
+        <h2>What Our Patients Say</h2>
+        <p><strong>Rohit Kumar:</strong> "Dr. Sidharth is the best! He diagnosed my condition quickly and treated me with great care."</p>
+        <p><strong>Anjali Sharma:</strong> "I was suffering from heart issues, but after visiting the clinic, my condition has improved significantly. Highly recommend!"</p>
     </div>
 
-    <script>
-        let appointmentCount = 0;
-        const timeSlots = ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM"];
+    <!-- Health Tips -->
+    <div class="extra-content">
+        <h2>Health Tips from Dr. Sidharth</h2>
+        <ul>
+            <li>Drink plenty of water and stay hydrated.</li>
+            <li>Exercise for at least 30 minutes daily.</li>
+            <li>Eat a balanced diet rich in proteins and vitamins.</li>
+            <li>Regular health check-ups can help prevent diseases.</li>
+            <li>Get enough sleep for better overall health.</li>
+        </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="extra-content">
+        <h2>Contact Us</h2>
+        <p><strong>Address:</strong> 123, Health Street, New Delhi, India</p>
+        <p><strong>Phone:</strong> +91 9876543210</p>
+        <p><strong>Email:</strong> contact@sidharhsclinic.com</p>
+        <iframe 
+            width="100%" 
+            height="300" 
+            frameborder="0" 
+            style="border:0" 
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen 
+            src="https://www.google.com/maps/embed/v1/place?q=New+Delhi,India&key=YOUR_GOOGLE_MAPS_API_KEY">
+        </iframe>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDceo...",
+            authDomain: "doctor-appointment-a7bb7.firebaseapp.com",
+            databaseURL: "https://doctor-appointment-a7bb7-default-rtdb.firebaseio.com",
+            projectId: "doctor-appointment-a7bb7",
+            storageBucket: "doctor-appointment-a7bb7.firebasestorage.app",
+            messagingSenderId: "68082044375",
+            appId: "1:68082044375:web:929c06a35c18e5b2988f92"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
         document.getElementById("appointmentForm").addEventListener("submit", function(event) {
             event.preventDefault();
-            appointmentCount++;
             let name = document.getElementById("name").value;
             let phone = document.getElementById("phone").value;
             let age = document.getElementById("age").value;
             let email = document.getElementById("email").value;
-            let appointmentNumber = appointmentCount;
-            let timeSlot = timeSlots[(appointmentNumber - 1) % timeSlots.length];
 
-            document.getElementById("appointmentNumber").innerText = appointmentNumber;
-            document.getElementById("timeSlot").innerText = timeSlot;
-            document.getElementById("confirmedName").innerText = name;
-            document.getElementById("confirmedPhone").innerText = phone;
-            document.getElementById("confirmedAge").innerText = age;
-            document.getElementById("confirmedEmail").innerText = email;
-            document.getElementById("confirmation").style.display = "block";
-
-            // Send email using EmailJS
-            let emailParams = {
-                to_email: email,
-                name: name,
-                appointment_number: appointmentNumber,
-                time_slot: timeSlot
-            };
-
-            emailjs.send("service_q3ns39z", "template_v7osnvv", emailParams)
-                .then(response => {
-                    alert("Appointment confirmation email sent successfully!");
-                })
-                .catch(error => {
-                    console.error("Email sending failed:", error);
-                });
+            push(ref(database, 'appointments'), { name, phone, age, email })
+                .then(() => alert("Appointment Booked Successfully!"))
+                .catch(error => console.error("Error:", error));
         });
     </script>
 </body>
